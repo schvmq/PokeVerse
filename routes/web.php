@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PokedexController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,10 +26,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Create: Add to Team (Store)
     Route::post('/my-team', [TeamController::class, 'store'])->name('team.store');
     
+    // Update: Update nicknames or field notes 
+    Route::patch('/my-team/{team}', [TeamController::class, 'update'])->name('team.update');
+
     // Delete: Remove from Team (Destroy)
     Route::delete('/my-team/{team}', [TeamController::class, 'destroy'])->name('team.destroy'); 
     
-    Route::get('/profile', fn() => Inertia::render('Profile/Edit'))->name('profile.edit');
+    // User Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 // --- 3. Authentication Routes ---
