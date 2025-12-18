@@ -24,19 +24,14 @@ class PokeApiService
         // Cache for 30 minutes to reduce repeated API calls
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($limit) {
             try {
-                $response = Http::get($this->baseUrl . 'pokemon', [
-                    'limit' => $limit,
-                ]);
-
+                $response = Http::get($this->baseUrl . 'pokemon', ['limit' => $limit]);
                 if ($response->successful()) {
                     // Validate/sanitize API results into clean internal structures
                     return $response->json('results'); 
                 }
             } catch (Exception $e) {
                 // Network or PHP error fallback
-            }
-            
-            // Apply “soft fail” safety if PokéAPI returns incomplete data
+            } 
             return []; 
         });
     }
@@ -45,31 +40,54 @@ class PokeApiService
     // Fetches details for a specific Pokémon (for detail modal) with caching.
     // Fulfills: Build API Services for Pokémon details.
     // =========================================================
+    public function getPokemonStoryData(string $name): ?array
+    {
+        $name = strtolower($name);
+        return Cache::remember("story_{$name}", now()->addHours(24), function () use ($name) {
+            try {
+                // Fetch species data specifically for the "Flavor Text" (Pokedex entry story)
+                $response = Http::get($this->baseUrl . "pokemon-species/{$name}");
+                if ($response->successful()) {
+                    $data = $response->json();
+                    // Grab only the English flavor text for the narrative
+                    $description = collect($data['flavor_text_entries'])
+                        ->where('language.name', 'en')
+                        ->first()['flavor_text'] ?? 'No field notes available.';
+                    
+                    return [
+                        'description' => str_replace(["\n", "\f"], ' ', $description),
+                        'habitat' => $data['habitat']['name'] ?? 'unknown',
+                        'is_legendary' => $data['is_legendary']
+                    ];
+                }
+            } catch (Exception $e) { }
+            return null;
+        });
+    }
+
+    // =========================================================
+    // Fetches basic details (stats/sprites) for the CRUD "User's Chapter".
+    // =========================================================
     public function getPokemonDetails(string $name): ?array
     {
         $name = strtolower($name);
         $cacheKey = 'pokemon_details_' . $name;
         
-        // Cache details for 24 hours, as this data rarely changes
         return Cache::remember($cacheKey, now()->addHours(24), function () use ($name) {
             try {
                 $response = Http::get($this->baseUrl . 'pokemon/' . $name);
-                
                 if ($response->successful()) {
                     return $response->json();
                 }
-            } catch (Exception $e) {
-            }
-            
-            // If API fails or returns 404, return null
+            } catch (Exception $e) { }
             return null;
         });
     }
 
-    /**
-     * Fetches the evolution chain for a specific Pokémon.
-     * (Required for Task 3: Evolution Journey)
-     */
+    
+    // =========================================================
+    // Fetches the evolution chain for a specific Pokémon.
+    // =========================================================
     public function getEvolutionChain(int $speciesId): array
     {
         $cacheKey = 'evolution_chain_' . $speciesId;
@@ -96,10 +114,9 @@ class PokeApiService
         });
     }
 
-    /**
-     * Fetches region data.
-     * (Required for Task 3: Region Explorer)
-     */
+    // =========================================================
+    // Fetches region data.
+    // =========================================================
     public function getRegionData(string $regionNameOrId): ?array
     {
         $cacheKey = 'region_' . $regionNameOrId;
