@@ -24,7 +24,8 @@ class PokeApiService
         // Cache for 30 minutes to reduce repeated API calls
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($limit) {
             try {
-                $response = Http::get($this->baseUrl . 'pokemon', ['limit' => $limit]);
+                // FIXED: Added withoutVerifying()
+                $response = Http::withoutVerifying()->get($this->baseUrl . 'pokemon', ['limit' => $limit]);
                 if ($response->successful()) {
                     // Validate/sanitize API results into clean internal structures
                     return $response->json('results'); 
@@ -45,8 +46,8 @@ class PokeApiService
         $name = strtolower($name);
         return Cache::remember("story_{$name}", now()->addHours(24), function () use ($name) {
             try {
-                // Fetch species data specifically for the "Flavor Text" (Pokedex entry story)
-                $response = Http::get($this->baseUrl . "pokemon-species/{$name}");
+                // FIXED: Added withoutVerifying()
+                $response = Http::withoutVerifying()->get($this->baseUrl . "pokemon-species/{$name}");
                 if ($response->successful()) {
                     $data = $response->json();
                     // Grab only the English flavor text for the narrative
@@ -75,7 +76,8 @@ class PokeApiService
         
         return Cache::remember($cacheKey, now()->addHours(24), function () use ($name) {
             try {
-                $response = Http::get($this->baseUrl . 'pokemon/' . $name);
+                // FIXED: Added withoutVerifying()
+                $response = Http::withoutVerifying()->get($this->baseUrl . 'pokemon/' . $name);
                 if ($response->successful()) {
                     return $response->json();
                 }
@@ -95,13 +97,15 @@ class PokeApiService
         return Cache::remember($cacheKey, now()->addDays(7), function () use ($speciesId) {
             try {
                 // 1. Get Species Data to find the Evolution Chain URL
-                $speciesResponse = Http::get($this->baseUrl . "pokemon-species/{$speciesId}");
+                // FIXED: Added withoutVerifying()
+                $speciesResponse = Http::withoutVerifying()->get($this->baseUrl . "pokemon-species/{$speciesId}");
                 
                 if ($speciesResponse->successful()) {
                     $evolutionUrl = $speciesResponse->json('evolution_chain.url');
                     
                     // 2. Fetch the actual Evolution Chain
-                    $evoResponse = Http::get($evolutionUrl);
+                    // FIXED: Added withoutVerifying()
+                    $evoResponse = Http::withoutVerifying()->get($evolutionUrl);
                     
                     if ($evoResponse->successful()) {
                         return $evoResponse->json();
@@ -123,7 +127,8 @@ class PokeApiService
 
         return Cache::remember($cacheKey, now()->addDays(30), function () use ($regionNameOrId) {
             try {
-                $response = Http::get($this->baseUrl . "region/{$regionNameOrId}");
+                // FIXED: Added withoutVerifying()
+                $response = Http::withoutVerifying()->get($this->baseUrl . "region/{$regionNameOrId}");
                 
                 if ($response->successful()) {
                     return $response->json();
@@ -144,25 +149,22 @@ class PokeApiService
         return Cache::remember("habitat_{$habitat}", now()->addDays(7), function () use ($habitat) {
             
             // 1. Fetch the list of ALL species in this habitat
-            $response = Http::get($this->baseUrl . "pokemon-habitat/{$habitat}");
+            // FIXED: Added withoutVerifying()
+            $response = Http::withoutVerifying()->get($this->baseUrl . "pokemon-habitat/{$habitat}");
         
             if ($response->successful()) {
                 $allPokemon = collect($response->json('pokemon_species'));
             
                 // 2. Pick 6 random ones
-                // We use 'min' to avoid errors if a habitat has fewer than 6 pokemon
                 $randomPicks = $allPokemon->random(min(6, $allPokemon->count()));
             
                 // 3. CRITICAL STEP: Fetch the DETAILS (Images) for these 6 pokemon
-                // We loop through the names and reuse your existing getPokemonDetails method
                 return $randomPicks->map(function ($species) {
                     return $this->getPokemonDetails($species['name']);
-                })->filter()->values()->all(); // filter() removes any nulls if an API call fails
+                })->filter()->values()->all();
             }
         
             return [];
         });
     }
-
-
 }

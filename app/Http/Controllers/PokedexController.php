@@ -19,7 +19,7 @@ class PokedexController extends Controller
     public function index()
     {
         // Send data to the Frontend (Inertia)
-        return Inertia::render('Pokedex/Index', [
+        return Inertia::render('Welcome', [
         'landPokemon' => $this->pokeApi->getHabitatData('grassland'),
         'waterPokemon' => $this->pokeApi->getHabitatData('waters-edge'),
         'cavePokemon' => $this->pokeApi->getHabitatData('cave'),        ]);
