@@ -6,20 +6,28 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// --- 1. Imports and Unprotected/Public Routes ---
+// ==========================================
+// 1. PUBLIC ROUTES (No Login Required)
+// ==========================================
 
-// Default Home Route / Discover Page - Fetches the initial list
-// This replaces the old Inertia::render('Welcome') block.
+// This MUST be outside the 'auth' group so everyone can see the Story
 Route::get('/', [PokedexController::class, 'index'])->name('pokedex.index'); 
 
-// Details Page - Fetches specific Pokémon data
+// Details Page
 Route::get('/pokemon/{name}', [PokedexController::class, 'show'])->name('pokedex.show'); 
 
 
-// --- 2. Protected Routes (Requires Login/Auth Middleware - Task 10) ---
+// ==========================================
+// 2. PROTECTED ROUTES (Requires Login)
+// ==========================================
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
+    // Standard Dashboard (Required for redirection after login)
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
     // Read: My Team Index (using TeamController)
     Route::get('/my-team', [TeamController::class, 'index'])->name('team.index');
     
