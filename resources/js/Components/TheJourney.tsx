@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Pokemon, User } from '../App';
 import { PokemonCard } from './PokemonCard';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, ChevronDown } from 'lucide-react'; // ✅ Added ChevronDown
 import { useDebounce } from '../hooks/useDebounce';
-import professorImage from 'figma:asset/c18cec7d918feb53a71c6f712e03977391b87907.png';
+import professorImage from '../../images/new-professor.png';
 import labBackground from 'figma:asset/5a81c25dacf74242b16c39e3cf09df0ba12282e6.png';
 import forestBg from 'figma:asset/2b84ded071dcef7f4ea02b8c2ce18a381622c489.png';
 import caveBg from 'figma:asset/b8f858327b6e7cd50d46c7e98510a5ae40036b46.png';
@@ -59,18 +59,16 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
 
-  // Debounce search term with 300ms delay for performance optimization
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   useEffect(() => {
     fetchPokemonForHabitats();
   }, []);
 
-  // Track mouse position for flashlight effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+      };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
@@ -94,7 +92,7 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
   const filterPokemon = (pokemon: Pokemon[]) => {
     return pokemon.filter(p => {
       const matchesSearch = p.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-                           p.id.toString().includes(debouncedSearchTerm);
+                            p.id.toString().includes(debouncedSearchTerm);
       const matchesType = !selectedType || p.types.some(t => t.type.name === selectedType);
       return matchesSearch && matchesType;
     });
@@ -118,7 +116,6 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
     >
       {/* Hero Section */}
       <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-900 overflow-hidden">
-        {/* Lab Background Image */}
         <div 
           className="absolute inset-0 opacity-30"
           style={{
@@ -130,11 +127,8 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
           }}
         ></div>
         
-        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/70 to-emerald-900/80"></div>
-        
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20\"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
         
         <motion.div
           initial={{ y: 50, opacity: 0 }}
@@ -153,22 +147,30 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
               ease: "easeInOut",
               direction: "alternate",
             }}
-            className="w-32 h-32 mx-auto mb-8 animate-float"
+            className="h-56 md:h-72 w-auto mx-auto mb-8 animate-float flex justify-center"
           >
             <img 
               src={professorImage} 
               alt="Professor" 
-              className="w-full h-full object-contain drop-shadow-2xl professor-glow"
+              className="h-full w-auto object-contain drop-shadow-2xl professor-glow"
             />
           </motion.div>
           
           <h1 className="font-pokemon-title text-6xl md:text-8xl text-white mb-6 tracking-wider">
             THE PROFESSOR'S
             <br />
-            <span className="font-pokemon bg-gradient-to-r from-yellow-400 via-red-500 to-blue-500 bg-clip-text text-transparent text-4xl md:text-6xl">
+            <motion.span
+              className="inline-block mt-2 font-pokemon text-4xl md:text-6xl tracking-widest bg-gradient-to-r from-yellow-400 via-red-500 to-blue-500 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{ duration: 5, repeat: Infinity }}
+              style={{ backgroundSize: '200% 200%' }}
+            >
               FIELD LOG
-            </span>
+            </motion.span>
           </h1>
+
           <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-8">
             Journey through diverse habitats. Document rare species. Build your research collection.
           </p>
@@ -190,34 +192,48 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
         </motion.div>
       </div>
 
-      {/* Search & Filter */}
+      {/* ✅ FIXED: Search & Filter Consistency */}
       <div className="sticky top-16 z-40 bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row gap-4">
+            {/* Search Input */}
             <motion.div 
               className="flex-1 relative"
               whileFocus={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+              {/* Icon Container: Absolute Top/Bottom + Flex Center = Perfect Vertical Center */}
+              <div className="absolute left-4 top-0 bottom-0 flex items-center pointer-events-none">
+                <Search className="w-5 h-5 text-slate-400" />
+              </div>
               <input
                 type="text"
                 placeholder="Search by name or ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 smooth-transition"
+                // Added h-12 for fixed height and pl-12 for aligned icon spacing
+                className="w-full h-12 pl-12 pr-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 smooth-transition"
               />
             </motion.div>
+            
+            {/* Filter Dropdown */}
             <motion.div 
               className="relative sm:w-48"
               whileFocus={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
-              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+              {/* Filter Icon Container */}
+              <div className="absolute left-4 top-0 bottom-0 flex items-center pointer-events-none">
+                <Filter className="w-5 h-5 text-slate-400" />
+              </div>
+              {/* Added ChevronDown icon explicitly */}
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
+              
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none cursor-pointer smooth-transition"
+                // Added h-12 for fixed height matching search, and pl-12
+                className="w-full h-12 pl-12 pr-10 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none cursor-pointer smooth-transition"
               >
                 <option value="">All Types</option>
                 {allTypes.map(type => (
@@ -285,7 +301,6 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                 backgroundAttachment: 'fixed'
               } : undefined}
             >
-              {/* Overlay for all habitats to ensure text readability */}
               {(habitat.name === 'forest' || habitat.name === 'cave') && (
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50"></div>
               )}
@@ -293,7 +308,6 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30"></div>
               )}
 
-              {/* FOREST: Falling Leaves */}
               {habitat.name === 'forest' && (
                 <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
                   {[...Array(20)].map((_, i) => (
@@ -327,12 +341,9 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                 </div>
               )}
 
-              {/* CAVE: Flashlight Effect */}
               {habitat.name === 'cave' && (
                 <>
-                  {/* Dark overlay */}
                   <div className="absolute inset-0 bg-black/70 z-[1] pointer-events-none"></div>
-                  {/* Flashlight spotlight */}
                   <div 
                     className="absolute w-96 h-96 rounded-full pointer-events-none z-[2] transition-all duration-100 ease-out"
                     style={{
@@ -343,7 +354,6 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                       filter: 'blur(8px)',
                     }}
                   />
-                  {/* Inner bright spot */}
                   <div 
                     className="absolute w-48 h-48 rounded-full pointer-events-none z-[3] transition-all duration-100 ease-out"
                     style={{
@@ -356,7 +366,6 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                 </>
               )}
 
-              {/* SEA: Falling Rain */}
               {habitat.name === 'sea' && (
                 <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
                   {[...Array(50)].map((_, i) => (

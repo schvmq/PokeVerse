@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Compass, FlaskConical, LogIn, LogOut, UserPlus } from 'lucide-react';
 import { User } from '../App';
-import professorImage from 'figma:asset/c18cec7d918feb53a71c6f712e03977391b87907.png';
+import professorImage from '../../images/new-professor.png';
 
 interface NavigationProps {
   currentView: 'home' | 'journey' | 'lab';

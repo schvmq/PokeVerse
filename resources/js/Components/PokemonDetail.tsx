@@ -233,11 +233,11 @@ export function PokemonDetail({
         </div>
 
         {/* Field Notes Section */}
-        {capturedData?.fieldNotes && (
+        {capturedData?.field_notes && (
           <div className="px-8 pb-8">
             <h3 className="text-2xl text-white mb-4">Field Notes</h3>
             <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
-              <p className="text-slate-300 italic">{capturedData.fieldNotes}</p>
+              <p className="text-slate-300 italic">{capturedData.field_notes}</p>
             </div>
           </div>
         )}

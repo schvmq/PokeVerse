@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ChevronDown, Sparkles, Map, Book } from 'lucide-react';
-import professorImage from 'figma:asset/c18cec7d918feb53a71c6f712e03977391b87907.png';
+import professorImage from '../../images/new-professor.png';
 import labBackground from 'figma:asset/5a81c25dacf74242b16c39e3cf09df0ba12282e6.png';
 import bikingGif from 'figma:asset/811757e09f4bef2468adf2baac2da198555e8011.png';
 
@@ -14,7 +14,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
   return (
     <div className="min-h-screen bg-slate-950">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
         {/* Bike GIF Background */}
         <div 
           className="absolute inset-0 opacity-30"
@@ -67,28 +67,30 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
           />
         ))}
 
-        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-          {/* Professor Logo */}
+        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto flex flex-col items-center justify-center min-h-screen">
+          
+          {/* ✅ FIXED: Professor Container Sizing */}
+          {/* Changed w-40 h-40 to h-64/h-96 so he fits vertically without cutting off */}
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
+            initial={{ scale: 0, opacity: 0, y: 50 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
             transition={{ 
               type: "spring", 
               stiffness: 200, 
               damping: 20,
               delay: 0.2 
             }}
-            className="w-40 h-40 mx-auto mb-8"
+            className="relative h-40 md:h-80 w-auto mx-auto mb-8 flex justify-center"
           >
             <motion.img
               src={professorImage}
               alt="Professor"
-              className="w-full h-full object-contain drop-shadow-2xl professor-glow"
+              className="h-full w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] professor-glow"
               animate={{
-                y: [0, -10, 0],
+                y: [0, -15, 0],
               }}
               transition={{
-                duration: 3,
+                duration: 4,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
@@ -101,7 +103,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <h1 className="font-pokemon-title text-7xl md:text-9xl mb-4 tracking-wider">
+            <h1 className="font-pokemon-title text-6xl md:text-9xl mb-4 tracking-wider leading-tight">
               <motion.span
                 className="inline-block bg-gradient-to-r from-yellow-400 via-red-500 to-blue-500 bg-clip-text text-transparent"
                 animate={{
@@ -113,7 +115,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
                 POKEVERSE
               </motion.span>
             </h1>
-            <p className="font-pokemon text-2xl md:text-4xl text-white mb-2">
+            <p className="font-pokemon text-xl md:text-3xl text-white mb-2 tracking-widest">
               THE PROFESSOR'S FIELD LOG
             </p>
           </motion.div>
@@ -123,7 +125,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             Embark on an epic research expedition. Explore diverse habitats, document rare species, 
             and build your ultimate Pokémon collection.
@@ -134,13 +136,13 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full"
           >
             <motion.button
               onClick={onGetStarted}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(239, 68, 68, 0.6)" }}
               whileTap={{ scale: 0.95 }}
-              className="group relative px-8 py-4 bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 rounded-full text-white font-pokemon-title text-xl shadow-2xl shadow-red-500/50 overflow-hidden"
+              className="group relative px-10 py-5 bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 rounded-full text-white font-pokemon-title text-xl shadow-2xl shadow-red-900/50 overflow-hidden w-full sm:w-auto"
             >
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500"
@@ -148,7 +150,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
                 whileHover={{ x: '100%' }}
                 transition={{ duration: 0.5 }}
               />
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-3">
                 <Sparkles className="w-6 h-6" />
                 START YOUR JOURNEY
               </span>
@@ -156,11 +158,11 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
 
             <motion.button
               onClick={onExploreJourney}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, borderColor: "#3b82f6", backgroundColor: "rgba(30, 41, 59, 0.9)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-slate-800/80 backdrop-blur-sm border-2 border-slate-600 hover:border-blue-500 rounded-full text-white font-pokemon-title text-xl transition-all"
+              className="px-10 py-5 bg-slate-900/60 backdrop-blur-sm border-2 border-slate-700 rounded-full text-white font-pokemon-title text-xl transition-all w-full sm:w-auto"
             >
-              <span className="flex items-center gap-2">
+              <span className="flex items-center justify-center gap-3">
                 <Map className="w-6 h-6" />
                 EXPLORE AS GUEST
               </span>
@@ -172,47 +174,47 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="mt-20"
+            className="mt-14 md:mt-22 mb-4"
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="flex flex-col items-center text-slate-400"
+              className="flex flex-col items-center text-slate-500 hover:text-white transition-colors cursor-pointer"
             >
-              <span className="text-sm mb-2 font-pokemon-body">Discover More</span>
-              <ChevronDown className="w-6 h-6 animate-bounce" />
+              <span className="text-xs uppercase tracking-widest mb-2 font-bold">Scroll to Begin</span>
+              <ChevronDown className="w-6 h-6" />
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="relative py-20 bg-gradient-to-b from-slate-950 to-slate-900">
+      <section className="relative py-32 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-pokemon-title text-5xl md:text-6xl text-center text-white mb-16"
+            className="font-pokemon-title text-5xl md:text-6xl text-center text-white mb-20 drop-shadow-lg"
           >
             YOUR RESEARCH AWAITS
           </motion.h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {/* Feature 1 */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="bg-gradient-to-br from-emerald-900/50 to-green-900/30 backdrop-blur-sm border border-emerald-700/50 rounded-2xl p-8 text-center"
+              whileHover={{ y: -15, scale: 1.03 }}
+              className="bg-gradient-to-br from-emerald-950 to-slate-900 backdrop-blur-md border border-emerald-800/50 rounded-3xl p-10 text-center shadow-xl hover:shadow-emerald-900/30 transition-all group"
             >
-              <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Map className="w-8 h-8 text-emerald-400" />
+              <div className="w-20 h-20 bg-emerald-900/50 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 border border-emerald-700/30">
+                <Map className="w-10 h-10 text-emerald-400" />
               </div>
-              <h3 className="font-pokemon-title text-2xl text-white mb-4">EXPLORE HABITATS</h3>
-              <p className="text-slate-300">
+              <h3 className="font-pokemon-title text-2xl text-white mb-4 tracking-wide">EXPLORE HABITATS</h3>
+              <p className="text-slate-400 leading-relaxed">
                 Journey through lush forests, mysterious caves, and azure depths. Each habitat 
                 offers unique Pokémon species to discover.
               </p>
@@ -224,14 +226,14 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="bg-gradient-to-br from-blue-900/50 to-cyan-900/30 backdrop-blur-sm border border-blue-700/50 rounded-2xl p-8 text-center"
+              whileHover={{ y: -15, scale: 1.03 }}
+              className="bg-gradient-to-br from-blue-950 to-slate-900 backdrop-blur-md border border-blue-800/50 rounded-3xl p-10 text-center shadow-xl hover:shadow-blue-900/30 transition-all group"
             >
-              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-8 h-8 text-blue-400" />
+              <div className="w-20 h-20 bg-blue-900/50 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 border border-blue-700/30">
+                <Sparkles className="w-10 h-10 text-blue-400" />
               </div>
-              <h3 className="font-pokemon-title text-2xl text-white mb-4">CAPTURE & COLLECT</h3>
-              <p className="text-slate-300">
+              <h3 className="font-pokemon-title text-2xl text-white mb-4 tracking-wide">CAPTURE & COLLECT</h3>
+              <p className="text-slate-400 leading-relaxed">
                 Build your personal Pokédex. Capture Pokémon, give them nicknames, and document 
                 your findings with detailed field notes.
               </p>
@@ -243,14 +245,14 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="bg-gradient-to-br from-purple-900/50 to-pink-900/30 backdrop-blur-sm border border-purple-700/50 rounded-2xl p-8 text-center"
+              whileHover={{ y: -15, scale: 1.03 }}
+              className="bg-gradient-to-br from-purple-950 to-slate-900 backdrop-blur-md border border-purple-800/50 rounded-3xl p-10 text-center shadow-xl hover:shadow-purple-900/30 transition-all group"
             >
-              <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Book className="w-8 h-8 text-purple-400" />
+              <div className="w-20 h-20 bg-purple-900/50 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300 border border-purple-700/30">
+                <Book className="w-10 h-10 text-purple-400" />
               </div>
-              <h3 className="font-pokemon-title text-2xl text-white mb-4">MANAGE YOUR LAB</h3>
-              <p className="text-slate-300">
+              <h3 className="font-pokemon-title text-2xl text-white mb-4 tracking-wide">MANAGE YOUR LAB</h3>
+              <p className="text-slate-400 leading-relaxed">
                 Access your personal laboratory to review captured Pokémon, update research notes, 
                 and manage your growing collection.
               </p>

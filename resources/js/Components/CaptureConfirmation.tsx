@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
 import { Pokemon } from '../App';
-import professorImage from 'figma:asset/c18cec7d918feb53a71c6f712e03977391b87907.png';
+import pokeballRealistic from '../../images/pokeball-realistic.png';
 
 interface CaptureConfirmationProps {
   pokemon: Pokemon;
@@ -14,9 +14,9 @@ export function CaptureConfirmation({ pokemon }: CaptureConfirmationProps) {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
-      className="fixed top-24 left-1/2 -translate-x-1/2 z-50"
+      className="fixed top-20 right-6 z-50"
     >
-      <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-4 rounded-2xl shadow-2xl shadow-green-500/50 flex items-center gap-4 border border-green-400">
+      <div className="bg-emerald-400 text-emerald-950 px-6 py-4 rounded-2xl shadow-xl shadow-emerald-800/30 flex items-center gap-4 border border-emerald-500">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -27,13 +27,13 @@ export function CaptureConfirmation({ pokemon }: CaptureConfirmationProps) {
         </motion.div>
         
         <div className="font-pokemon-body">
-          <div className="text-sm opacity-90">Pokémon Captured!</div>
-          <div className="capitalize">{pokemon.name} added to your collection</div>
+          <div className="text-sm text-emerald-950/80">Pokémon Captured!</div>
+          <div className="capitalize text-emerald-950">{pokemon.name} added to your collection</div>
         </div>
 
         <motion.img
-          src={professorImage}
-          alt="Professor"
+          src={pokeballRealistic}
+          alt="Poké Ball"
           animate={{
             rotate: [0, 360],
           }}
