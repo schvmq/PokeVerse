@@ -18,14 +18,11 @@ class PokedexController extends Controller
 
     public function index()
     {
-        // Fetch data using your Service
-        $pokemons = $this->pokeApi->getPokemonList(20);
-
         // Send data to the Frontend (Inertia)
-        // Note: 'Pokedex/Index' is the React component Corey will build later
         return Inertia::render('Pokedex/Index', [
-            'pokemons' => $pokemons
-        ]);
+        'landPokemon' => $this->pokeApi->getHabitatData('grassland'),
+        'waterPokemon' => $this->pokeApi->getHabitatData('waters-edge'),
+        'cavePokemon' => $this->pokeApi->getHabitatData('cave'),        ]);
     }
 
     public function show($name)

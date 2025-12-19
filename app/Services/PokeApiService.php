@@ -135,4 +135,34 @@ class PokeApiService
         });
     }
 
+    //
+    //
+    //
+    public function getHabitatData(string $habitat): array
+    {
+        // Cache heavily (7 days)
+        return Cache::remember("habitat_{$habitat}", now()->addDays(7), function () use ($habitat) {
+            
+            // 1. Fetch the list of ALL species in this habitat
+            $response = Http::get($this->baseUrl . "pokemon-habitat/{$habitat}");
+        
+            if ($response->successful()) {
+                $allPokemon = collect($response->json('pokemon_species'));
+            
+                // 2. Pick 6 random ones
+                // We use 'min' to avoid errors if a habitat has fewer than 6 pokemon
+                $randomPicks = $allPokemon->random(min(6, $allPokemon->count()));
+            
+                // 3. CRITICAL STEP: Fetch the DETAILS (Images) for these 6 pokemon
+                // We loop through the names and reuse your existing getPokemonDetails method
+                return $randomPicks->map(function ($species) {
+                    return $this->getPokemonDetails($species['name']);
+                })->filter()->values()->all(); // filter() removes any nulls if an API call fails
+            }
+        
+            return [];
+        });
+    }
+
+
 }
