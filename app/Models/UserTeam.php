@@ -11,12 +11,20 @@ class UserTeam extends Model
 {
     use HasFactory;
 
+    protected $table = 'captured_pokemon';
+
     protected $fillable = [
-        'pokemon_api_id',
+        'pokemon_id',
         'pokemon_name',
         'nickname',
-        'notes',
-        'user_id', // Make sure this is included for mass assignment!
+        'field_notes',
+        'status',
+        'captured_at',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'captured_at' => 'datetime',
     ];
 
     /**
