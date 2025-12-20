@@ -115,7 +115,7 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
       className="pt-16"
     >
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-900 overflow-hidden">
+      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-900 overflow-hidden pt-20 sm:pt-16">
         <div 
           className="absolute inset-0 opacity-30"
           style={{
@@ -156,11 +156,11 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
             />
           </motion.div>
           
-          <h1 className="font-pokemon-title text-6xl md:text-8xl text-white mb-6 tracking-wider">
+          <h1 className="font-pokemon-title text-4xl sm:text-6xl md:text-8xl text-white mb-6 tracking-wider text-balance px-4">
             THE PROFESSOR'S
             <br />
             <motion.span
-              className="inline-block mt-2 font-pokemon text-4xl md:text-6xl tracking-widest bg-gradient-to-r from-yellow-400 via-red-500 to-blue-500 bg-clip-text text-transparent"
+              className="inline-block mt-2 font-pokemon text-3xl sm:text-4xl md:text-6xl tracking-widest bg-gradient-to-r from-yellow-400 via-red-500 to-blue-500 bg-clip-text text-transparent"
               animate={{
                 backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
               }}
@@ -171,7 +171,7 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
             </motion.span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-8 px-4 text-balance">
             Journey through diverse habitats. Document rare species. Build your research collection.
           </p>
           
@@ -283,22 +283,13 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: false, amount: 0.2 }}
-              className="min-h-screen relative py-20"
+              className="min-h-screen relative py-20 bg-cover bg-center md:bg-fixed"
               style={habitat.name === 'forest' ? {
                 backgroundImage: `url(${forestBg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed'
               } : habitat.name === 'cave' ? {
                 backgroundImage: `url(${caveBg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed'
               } : habitat.name === 'sea' ? {
                 backgroundImage: `url(${seaBg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed'
               } : undefined}
             >
               {(habitat.name === 'forest' || habitat.name === 'cave') && (
@@ -410,15 +401,9 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                   </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {filteredPokemon.map((pokemon, idx) => (
-                    <motion.div
-                      key={pokemon.id}
-                      initial={{ opacity: 0, y: 50 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.05, duration: 0.5 }}
-                    >
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {filteredPokemon.map((pokemon) => (
+                    <div key={pokemon.id} className="h-full">
                       <PokemonCard
                         pokemon={pokemon}
                         onClick={() => onPokemonClick(pokemon)}
@@ -427,7 +412,7 @@ export function TheJourney({ onPokemonClick, onCapture, isCaptured, user }: TheJ
                         user={user}
                         biome={habitat.name}
                       />
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>

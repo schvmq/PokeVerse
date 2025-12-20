@@ -54,7 +54,7 @@ export function AuthModal({
         exit={{ scale: 0.9, y: 30, opacity: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md bg-slate-950 backdrop-blur-xl rounded-[2.5rem] border border-red-500/30 overflow-hidden shadow-[0_20px_60px_-15px_rgba(220,38,38,0.5)]"
+        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-slate-950 backdrop-blur-xl rounded-[2.5rem] border border-red-500/30 shadow-[0_20px_60px_-15px_rgba(220,38,38,0.5)] scrollbar-thin scrollbar-thumb-red-500/40"
       >
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-400/50 to-transparent" />
 
@@ -72,7 +72,7 @@ export function AuthModal({
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 30 }}
-              className="p-8 pt-12 text-center relative flex flex-col h-full justify-between"
+              className="p-6 sm:p-8 pt-12 text-center relative flex flex-col h-full justify-between gap-8 sm:gap-0"
             >
               <div>
                 <div className="relative w-40 h-40 mx-auto mb-8">
@@ -127,7 +127,7 @@ export function AuthModal({
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
-              className="p-8 pt-10"
+              className="p-6 sm:p-8 sm:pt-10"
             >
               <div className="text-center mb-6">
                 <div className="relative w-24 h-24 mx-auto mb-4">
@@ -231,7 +231,7 @@ export function AuthModal({
                          <SlowFadeGradient />
                     </button>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <button
                           type="button"
                           onClick={() => setStep('initial')}

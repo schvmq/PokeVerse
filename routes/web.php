@@ -7,10 +7,7 @@ use Inertia\Inertia;
 
 // --- 1. Home Route - Redirect based on auth status ---
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
-    return Inertia::render('Welcome');
+    return view('app');
 })->name('home');
 
 // --- 2. Public Routes (No Auth Required) ---

@@ -80,7 +80,7 @@ export function PokemonDetail({
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl shadow-2xl border border-slate-700"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl shadow-2xl border border-slate-700 scrollbar-thin scrollbar-thumb-slate-700/70"
       >
         {/* Close Button */}
         <button
@@ -91,8 +91,8 @@ export function PokemonDetail({
         </button>
 
         {/* Header Section */}
-        <div className="relative p-8 bg-gradient-to-br from-purple-900/30 to-blue-900/30 border-b border-slate-700">
-          <div className="flex flex-col md:flex-row gap-8 items-center">
+        <div className="relative p-6 sm:p-8 bg-gradient-to-br from-purple-900/30 to-blue-900/30 border-b border-slate-700">
+          <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-center">
             {/* Pokemon Image */}
             <div className="relative">
               <motion.div
@@ -104,7 +104,7 @@ export function PokemonDetail({
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="w-64 h-64 flex items-center justify-center"
+                className="w-40 h-40 sm:w-64 sm:h-64 flex items-center justify-center"
               >
                 {imageUrl ? (
                   <img
@@ -187,7 +187,7 @@ export function PokemonDetail({
         </div>
 
         {/* Stats Section */}
-        <div className="p-8">
+        <div className="p-6 sm:p-8">
           <h3 className="text-2xl text-white mb-6">Base Stats</h3>
           <div className="space-y-4">
             {(pokemon.stats || []).map((stat) => {
@@ -218,7 +218,7 @@ export function PokemonDetail({
         </div>
 
         {/* Abilities Section */}
-        <div className="px-8 pb-8">
+        <div className="px-6 sm:px-8 pb-6 sm:pb-8">
           <h3 className="text-2xl text-white mb-4">Abilities</h3>
           <div className="flex gap-3 flex-wrap">
             {(pokemon.abilities || []).map(({ ability }) => (
@@ -234,7 +234,7 @@ export function PokemonDetail({
 
         {/* Field Notes Section */}
         {capturedData?.field_notes && (
-          <div className="px-8 pb-8">
+          <div className="px-6 sm:px-8 pb-6 sm:pb-8">
             <h3 className="text-2xl text-white mb-4">Field Notes</h3>
             <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
               <p className="text-slate-300 italic">{capturedData.field_notes}</p>

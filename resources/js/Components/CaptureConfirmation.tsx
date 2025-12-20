@@ -14,9 +14,9 @@ export function CaptureConfirmation({ pokemon }: CaptureConfirmationProps) {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
-      className="fixed top-20 right-6 z-50"
+      className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 z-50 flex justify-center sm:justify-end"
     >
-      <div className="bg-emerald-400 text-emerald-950 px-6 py-4 rounded-2xl shadow-xl shadow-emerald-800/30 flex items-center gap-4 border border-emerald-500">
+      <div className="bg-emerald-400 text-emerald-950 px-4 py-3 sm:px-6 sm:py-4 rounded-2xl shadow-xl shadow-emerald-800/30 flex items-center gap-3 sm:gap-4 border border-emerald-500 w-full sm:w-auto max-w-xl">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}

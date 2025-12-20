@@ -24,7 +24,6 @@ class PokeApiService
         // Cache for 30 minutes to reduce repeated API calls
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($limit) {
             try {
-                // FIXED: Added withoutVerifying()
                 $response = Http::withoutVerifying()->get($this->baseUrl . 'pokemon', ['limit' => $limit]);
                 if ($response->successful()) {
                     // Validate/sanitize API results into clean internal structures
@@ -46,7 +45,6 @@ class PokeApiService
         $name = strtolower($name);
         return Cache::remember("story_{$name}", now()->addHours(24), function () use ($name) {
             try {
-                // FIXED: Added withoutVerifying()
                 $response = Http::withoutVerifying()->get($this->baseUrl . "pokemon-species/{$name}");
                 if ($response->successful()) {
                     $data = $response->json();
@@ -76,7 +74,6 @@ class PokeApiService
         
         return Cache::remember($cacheKey, now()->addHours(24), function () use ($name) {
             try {
-                // FIXED: Added withoutVerifying()
                 $response = Http::withoutVerifying()->get($this->baseUrl . 'pokemon/' . $name);
                 if ($response->successful()) {
                     return $response->json();

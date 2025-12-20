@@ -14,7 +14,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
   return (
     <div className="min-h-screen bg-slate-950">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 pt-28 sm:pt-24">
         {/* Bike GIF Background */}
         <div 
           className="absolute inset-0 opacity-30"
@@ -103,7 +103,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <h1 className="font-pokemon-title text-6xl md:text-9xl mb-4 tracking-wider leading-tight">
+            <h1 className="font-pokemon-title text-4xl sm:text-6xl lg:text-8xl xl:text-9xl mb-4 tracking-wider leading-tight text-balance">
               <motion.span
                 className="inline-block bg-gradient-to-r from-yellow-400 via-red-500 to-blue-500 bg-clip-text text-transparent"
                 animate={{
@@ -125,7 +125,7 @@ export function HomePage({ onGetStarted, onExploreJourney }: HomePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed text-balance px-4 sm:px-0"
           >
             Embark on an epic research expedition. Explore diverse habitats, document rare species, 
             and build your ultimate Pokémon collection.

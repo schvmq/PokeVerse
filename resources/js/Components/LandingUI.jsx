@@ -54,17 +54,17 @@ export default function LandingUI() {
                 animate="show"
                 className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] text-center px-4"
             >
-                <motion.h1 variants={item} className="text-6xl md:text-8xl font-black tracking-tighter mb-4">
+                <motion.h1 variants={item} className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-4 text-balance px-4">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-red-400 to-orange-500 drop-shadow-sm">
                         POKEVERSE
                     </span>
                 </motion.h1>
 
-                <motion.h2 variants={item} className="text-xl md:text-3xl font-mono text-gray-200 mb-8 uppercase tracking-widest border-b-2 border-red-500/50 pb-2">
+                <motion.h2 variants={item} className="text-lg sm:text-xl md:text-3xl font-mono text-gray-200 mb-8 uppercase tracking-widest border-b-2 border-red-500/50 pb-2 px-4 text-balance">
                     The Professor's Field Log
                 </motion.h2>
 
-                <motion.p variants={item} className="max-w-2xl text-gray-400 text-lg md:text-xl leading-relaxed mb-12">
+                <motion.p variants={item} className="max-w-2xl text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed mb-12 px-4 text-balance">
                     Embark on an epic research expedition. Explore diverse habitats, 
                     document rare species, and build your ultimate 
                     <span className="text-white font-bold"> Pokémon collection</span>.

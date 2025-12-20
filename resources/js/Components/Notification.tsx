@@ -32,18 +32,19 @@ export const Notification = ({ message, type, onClose }: NotificationProps) => {
       initial={{ opacity: 0, y: -20, x: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
       exit={{ opacity: 0, y: -10, x: 10, scale: 0.95 }}
-      className={`fixed top-6 right-6 z-[100] flex items-center gap-4 px-6 py-4 rounded-xl border backdrop-blur-md shadow-2xl ${bgColors[type]} min-w-[280px] max-w-md`}
+      className={`fixed inset-x-3 top-3 sm:inset-auto sm:top-6 sm:right-6 z-[100] flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 px-4 py-3 sm:px-5 sm:py-4 rounded-xl border backdrop-blur-xl shadow-2xl ${bgColors[type]} w-[calc(100%-1.5rem)] sm:w-auto min-w-[0] sm:min-w-[280px] max-w-[520px] pointer-events-auto`}
     >
       {/* Status Dot */}
       <div className={`w-3 h-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${iconColors[type]}`} />
       
-      <div className="flex-1">
-        <p className="font-medium text-sm tracking-wide">{message}</p>
+      <div className="flex-1 leading-snug">
+        <p className="font-medium text-sm sm:text-[15px] tracking-wide break-words">{message}</p>
       </div>
 
       <button 
         onClick={onClose}
-        className="opacity-50 hover:opacity-100 transition-opacity"
+        className="shrink-0 px-2 py-1 text-lg leading-none rounded-lg bg-white/5 hover:bg-white/10 transition-colors opacity-70 hover:opacity-100"
+        aria-label="Close notification"
       >
         ×
       </button>
