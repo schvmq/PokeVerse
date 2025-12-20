@@ -10,7 +10,7 @@ Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
-    return Inertia::render('WelcomeLanding');
+    return Inertia::render('Welcome');
 })->name('home');
 
 // --- 2. Public Routes (No Auth Required) ---

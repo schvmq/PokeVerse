@@ -9,6 +9,7 @@ import { Navigation } from './Components/Navigation';
 import { CaptureConfirmation } from './Components/CaptureConfirmation';
 import { PokeballAnimation } from './Components/PokeballAnimation';
 import { Notification } from './Components/Notification';
+import IntroScene from './Components/IntroScene';
 
 // ... (Your Interfaces for Pokemon, CapturedPokemon, User remain exactly the same) ...
 // For brevity, I am keeping the interfaces implied. If you copy this, keep your interfaces at the top!
@@ -59,6 +60,7 @@ export default function App() {
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [captureConfirmation, setCaptureConfirmation] = useState<Pokemon | null>(null);
   const [showPokeballAnimation, setShowPokeballAnimation] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
 
   // ✅ NEW: Auth specific state
   const [authError, setAuthError] = useState<string | null>(null);
@@ -255,6 +257,23 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 font-pokemon-body">
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            key="intro-layer"
+            className="fixed inset-0 z-[1000] bg-black"
+            exit={{ 
+              scale: 20,
+              opacity: 0,
+              filter: "blur(20px)"
+            }}
+            transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <IntroScene onComplete={() => setShowIntro(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Navigation
         currentView={currentView}
         onViewChange={setCurrentView}
